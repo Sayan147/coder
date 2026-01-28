@@ -15,7 +15,7 @@ from app.configs.sqlite_config import SQLiteDatabase
 from app.utils.memory_utils_sqlite import add_message, get_messages, ensure_session
 from app.utils.coder_agent import (
     plan_code_generation,
-    load_coder_context_sqlite,
+    load_coder_context,
     find_function_exemplars,
     generate_code_with_exemplars,
     validate_generated_code,
@@ -83,8 +83,8 @@ async def generate_code(
         # 4. Navigator: get a simple generation plan
         plan = plan_code_generation(requirements=requirements, project_type=project_type)
 
-        # 5. Context: load KB, tribal KB, conversation history (SQLite version)
-        context = load_coder_context_sqlite(
+        # 5. Context: load KB, tribal KB, conversation history
+        context = load_coder_context(
             db=db,
             project_data=project_data,
             project_type=project_type,
